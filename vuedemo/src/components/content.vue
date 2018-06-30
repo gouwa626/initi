@@ -43,28 +43,30 @@
                         <span>未开售</span>
                     </div>
                 </div>
-                <div class="open border" >
+                <div class="open border" @click = "seldata(addr)" v-on:click="show=!show">
                     <span>展开</span>
-                    <zhangkai></zhangkai>
                 </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <zhangkai :sel="selzk" @click = "zk" v-if="show"></zhangkai>
   </div>
 </template>
 
 <script>
 import qs from 'qs'
-import zhangkai from '@/components/zhangkai.vue'
+import zhangkai from '@/components/zhangkai'
 export default {
   components: {
     zhangkai
   },
   data() {
     return {
-      lists: []
+      lists: [],
+      selzk:{},
+      show:false
     }
   },
   mounted() {
@@ -83,14 +85,17 @@ export default {
     })
   },
   methods: {
-    onclick() {
-      props: ['propName']
+    seldata(addr){
+      this.selzk = addr;
+    },
+    zk(){
+
     }
   }
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 html{
     background-color: #f2f2f2;
 }
