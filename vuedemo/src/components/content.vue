@@ -1,5 +1,6 @@
 <template lang="html">
-  <div>
+  <div class="app" ref="app">
+    <div class="container" ref="container">
     <router-link :to="{ name: 'HelloWorld', params: {} }">返回主页面</router-link>
     <div class="content" v-for="elem in lists.data" :key="elem.key">
       <div class="title">
@@ -52,6 +53,7 @@
       </div>
     </div>
     <zhangkai :sel="selzk"  v-if="show" @close='showzk'></zhangkai>
+    </div>
   </div>
 </template>
 
@@ -66,13 +68,11 @@ export default {
   data() {
     return {
       lists: [],
-      selzk:{},
-      show:false,
-      bs:true
+      selzk: {},
+      show: false,
     }
   },
-  mounted() {
-    //do something after mounting vue instance
+  created() {
     // axios发送请求数据
     this.axios.post("https://trade-schedule.cp988.cn/api/v2/schedules/app/contest/list",
       qs.stringify({
@@ -80,41 +80,47 @@ export default {
       })
     ).then(res => {
       // 给每一组比赛添加一个show属性,默认是true
-      res.data.data.map(function(item){
+      res.data.data.map(function(item) {
         item.show = true
       })
       this.lists = res.data
+      this.$nextTick(() => {
+        console.log(this)
+        this._initScroll()
+      })
     }, res => {
       console.log("Error")
     })
-    // let content = document.querySelector('.content')
-    // let scroll = new BScroll(content,{})
-    // this.$nextTick(function(){
-    //   this.scroll = new Bscroll(this.$ref.content,{})
-    // })
+
   },
   methods: {
-    seldata(addr){
+    seldata(addr) {
       this.selzk = addr
     },
-    showzk(){
+    showzk() {
       this.show = !this.show
     },
-    toggle(elem){
+    toggle(elem) {
       elem.show = !elem.show
+    },
+    _initScroll() {
+      this.appscroll = new BScroll(this.$refs.app, {})
+      console.log(this.appscroll)
+      this.containerscroll = new BScroll(this.$refs.container, {})
     }
+
   },
 
-  filters:{
-    timestampToTime(timestamp){
-        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-        var Y = date.getFullYear() + '-';
-        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var D = date.getDate() + ' ';
-        var h = date.getHours() + ':';
-        var m = date.getMinutes();
-        var s = ':' + date.getSeconds();
-        return h + m;
+  filters: {
+    timestampToTime(timestamp) {
+      var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear() + '-';
+      var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+      var D = date.getDate() + ' ';
+      var h = date.getHours() + ':';
+      var m = date.getMinutes();
+      var s = ':' + date.getSeconds();
+      return h + m;
     }
   }
 
@@ -124,6 +130,10 @@ export default {
 <style lang="css" scoped>
 html{
     background-color: #f2f2f2;
+}
+.app{
+  height: 100px;
+  overflow: scroll;
 }
 .container{
     width: 100%;
