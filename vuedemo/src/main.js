@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import BScroll from 'better-scroll'
 import axios from 'axios'
 import './common/stylus/reset.styl'
 import './common/stylus/border.css'

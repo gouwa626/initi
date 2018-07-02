@@ -4,9 +4,9 @@
     <div class="content" v-for="elem in lists.data" :key="elem.key">
       <div class="title">
         <span>{{elem.issue}}</span>
-        <i class="ic iconfont icon-xiaosanjiao"></i>
+        <i class="ic iconfont icon-xiaosanjiao" @click="toggle(elem)"></i>
         </div>
-      <div class="items" v-for="addr in elem.contests" :key="addr.key">
+      <div class="items" v-for="addr in elem.contests" :key="addr.key" v-show="elem.show">
         <div class="con-item">
           <div class="item-left">
               <p>{{addr.weekNo.slice(2)}}</p>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 import qs from 'qs'
 import zhangkai from '@/components/zhangkai'
 export default {
@@ -66,7 +67,8 @@ export default {
     return {
       lists: [],
       selzk:{},
-      show:false
+      show:false,
+      bs:true
     }
   },
   mounted() {
@@ -77,10 +79,19 @@ export default {
         lotteryType: 'TC_JCZQ'
       })
     ).then(res => {
+      // 给每一组比赛添加一个show属性,默认是true
+      res.data.data.map(function(item){
+        item.show = true
+      })
       this.lists = res.data
     }, res => {
       console.log("Error")
     })
+    // let content = document.querySelector('.content')
+    // let scroll = new BScroll(content,{})
+    // this.$nextTick(function(){
+    //   this.scroll = new Bscroll(this.$ref.content,{})
+    // })
   },
   methods: {
     seldata(addr){
@@ -88,8 +99,12 @@ export default {
     },
     showzk(){
       this.show = !this.show
+    },
+    toggle(elem){
+      elem.show = !elem.show
     }
   },
+
   filters:{
     timestampToTime(timestamp){
         var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
