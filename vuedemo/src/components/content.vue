@@ -10,9 +10,8 @@
         <div class="con-item">
           <div class="item-left">
               <p>{{addr.weekNo.slice(2)}}</p>
-              <!-- <p style="color:{{addr.leagueEventsColor}};">{{addr.leagueName}}</p> -->
               <p :style="{color:addr.leagueEventsColor}">{{addr.leagueName}}</p>
-              <p>{{addr.saleEndTimeStr}}截期</p>
+              <p>{{addr.saleEndTimeStr|timestampToTime}}截期</p>
               <p>分析</p>
           </div>
           <div class="item-right">
@@ -34,7 +33,7 @@
                     </div>
                 </div>
                 <div class="con-top">
-                    <div class="z-num ">{{addr.rqspf.handicap > 0 ? '+' + addr.rqspf.handicap : addr.rqspf.handicap}}</div>
+                    <div class="z-num"  :class="addr.rqspf.handicap > 0 ? 'z-red' : 'f-green'">{{addr.rqspf.handicap > 0 ? '+' + addr.rqspf.handicap : addr.rqspf.handicap}}</div>
                     <div class="guess border js-guess " :class="[addr.rqspfSingleSale==1?'bor':'',addr.spfSaleStatus==1?'':'none']">
                         <span>让胜 {{addr.rqspf.home_odds}}</span>
                         <span>让平 {{addr.rqspf.draw_odds}}</span>
@@ -90,6 +89,18 @@ export default {
     showzk(){
       this.show = !this.show
     }
+  },
+  filters:{
+    timestampToTime(timestamp){
+        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var D = date.getDate() + ' ';
+        var h = date.getHours() + ':';
+        var m = date.getMinutes();
+        var s = ':' + date.getSeconds();
+        return h + m;
+    }
   }
 
 }
@@ -112,6 +123,8 @@ html{
     padding: 0 10px;
     color: #a7a7a7;
     background-color: #f2f2f2;
+    text-align: left;
+    font-size: 14px;
 }
 .ic{
     float: right;
