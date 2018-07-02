@@ -1,5 +1,6 @@
 <template lang="html">
   <div>
+    <router-link :to="{ name: 'HelloWorld', params: {} }">返回主页面</router-link>
     <div class="content" v-for="elem in lists.data" :key="elem.key">
       <div class="title">
         <span>{{elem.issue}}</span>
@@ -51,7 +52,7 @@
         </div>
       </div>
     </div>
-    <zhangkai :sel="selzk" @click = "zk" v-if="show"></zhangkai>
+    <zhangkai :sel="selzk"  v-if="show" @close='showzk'></zhangkai>
   </div>
 </template>
 
@@ -77,21 +78,20 @@ export default {
         lotteryType: 'TC_JCZQ'
       })
     ).then(res => {
-      console.log(res.data);
-      this.lists = res.data;
-      console.log(this.lists.data);
+      this.lists = res.data
     }, res => {
       console.log("Error")
     })
   },
   methods: {
     seldata(addr){
-      this.selzk = addr;
+      this.selzk = addr
     },
-    zk(){
-
+    showzk(){
+      this.show = !this.show
     }
   }
+
 }
 </script>
 

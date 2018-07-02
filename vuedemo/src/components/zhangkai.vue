@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <div class="zk">
+    <div class="zk" v-if="show">
       <div class="zk-content">
           <div class="top-team">
               <div class="team">
@@ -181,8 +181,8 @@
               </div>
           </div>
           <div class="btn-team">
-              <span id="cancel">取消</span>
-              <span id="ensure">确定</span>
+              <span @click="close" v-if="show">取消</span>
+              <span>确定</span>
           </div>
       </div>
     </div>
@@ -194,7 +194,20 @@
 <script>
 export default {
   props: {
-    sel:{}
+    sel:{
+      typeof:Object
+    }
+  },
+  data(){
+    return{
+      show:true
+    }
+  },
+  methods: {
+    close() {
+      this.show = !this.show
+      this.$emit('close')
+    }
   }
 }
 </script>
