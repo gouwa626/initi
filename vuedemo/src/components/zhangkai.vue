@@ -1,7 +1,7 @@
 <template lang="html">
-  <div @touchmove.prevent>
+  <div  class="111" @click.prevent>
     <div class="zk" v-if="show" ref="zk" @touchmove.prevent>
-      <div class="zk-content" @touchmove.prevent>
+      <div class="zk-content" @click.stop>
           <div class="top-team">
               <div class="team">
                   <span>{{sel.homeTeam}}</span>

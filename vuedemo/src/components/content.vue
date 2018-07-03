@@ -98,6 +98,7 @@ export default {
     },
     showzk() {
       this.show = !this.show
+      document.addEventListener('touchmove', function(e){e.preventDefault();}, false);
     },
     toggle(elem) {
       elem.show = !elem.show
