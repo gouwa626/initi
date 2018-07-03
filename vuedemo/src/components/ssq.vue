@@ -107,23 +107,26 @@ export default {
 
 <style lang="stylus">
 .d1
+  padding: 10px 15px 6px 15px;
   ul li
-    list-style: none
-    width 9%
-    height 30px
-    line-height 30px
-    text-align center
-    margin 2% 2%
+    list-style none
+    margin-bottom: 10px;
+    flex: 0 0 14.28%;
+    width: 14.28%;
+    flex-shrink: 0;
   li>span
     display block
     width 30px
     height 30px
     line-height 30px
-    text-align center
     border-radius 15px
+    margin 0 auto
+
 .d1 ul
   display flex
-  flex-wrap wrap
+  flex-flow row wrap
+  padding-bottom: 2px;
+  text-align: center;
 
 .d2 li span
     border 1px solid red

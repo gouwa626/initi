@@ -1,7 +1,7 @@
 <template lang="html">
-  <div>
-    <div class="zk" v-if="show">
-      <div class="zk-content">
+  <div @touchmove.prevent>
+    <div class="zk" v-if="show" ref="zk" @touchmove.prevent>
+      <div class="zk-content" @touchmove.prevent>
           <div class="top-team">
               <div class="team">
                   <span>{{sel.homeTeam}}</span>
@@ -10,7 +10,8 @@
               </div>
               <p>{{sel.weekNo}}</p>
           </div>
-          <div class="cont-team">
+          <div class="conteam" ref="conteam">
+            <div class="cont-team" >
               <div class="cont-spf">
                   <h3>胜平负<span class="log">单</span></h3>
                   <table class="border-topleft">
@@ -179,6 +180,7 @@
                       </tbody>
                   </table>
               </div>
+            </div>
           </div>
           <div class="btn-team">
               <span @click="close" v-if="show">取消</span>
@@ -186,22 +188,30 @@
           </div>
       </div>
     </div>
-
-
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 export default {
   props: {
-    sel:{
-      typeof:Object
+    sel: {
+      typeof: Object
     }
   },
-  data(){
-    return{
-      show:true
+  data() {
+    return {
+      show: true
     }
+  },
+  created() {
+    //do something after creating vue instance
+    this.$nextTick(() => {
+      console.log(this)
+      this.conteamscroll = new BScroll(this.$refs.conteam, {
+        click: true
+      })
+    })
   },
   methods: {
     close() {
@@ -213,7 +223,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-
 .zk{
     width: 100%;
     height: 100%;
@@ -222,8 +231,6 @@ export default {
     top: 0;
     left: 0;
     z-index: 998;
-    overflow: hidden;
-    overflow-y: hidden;
 }
 .zk-content{
     position: absolute;
@@ -253,15 +260,10 @@ export default {
     height: 30px;
     line-height: 30px;
 }
-.team>span:first-child{
+.team>span:first-child, .team>span:nth-child(2), .team>span:last-child{
     flex: 1;
 }
-.team>span:nth-child(2){
-    flex: 1;
-}
-.team>span:last-child{
-    flex: 1;
-}
+
 .top-team .team>span:nth-child(2){
     /* background: url(../assets/images/vs.png); */
     background-size: 45px 45px;
@@ -278,9 +280,12 @@ export default {
     font-size: 12px;
     color: #333;
 }
+.conteam{
+  height: 380px;
+  overflow: hidden;
+}
 .cont-team{
-    height: 380px;
-    overflow: scroll;
+
 }
 .cont-team .log{
     width: 15px;

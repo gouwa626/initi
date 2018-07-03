@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="app" ref="app">
-    <div class="container" ref="container">
+    <div class="container" ref="container" >
     <router-link :to="{ name: 'HelloWorld', params: {} }">返回主页面</router-link>
     <div class="content" v-for="elem in lists.data" :key="elem.key">
       <div class="title">
@@ -35,12 +35,12 @@
                 </div>
                 <div class="con-top">
                     <div class="z-num"  :class="addr.rqspf.handicap > 0 ? 'z-red' : 'f-green'">{{addr.rqspf.handicap > 0 ? '+' + addr.rqspf.handicap : addr.rqspf.handicap}}</div>
-                    <div class="guess border js-guess " :class="[addr.rqspfSingleSale==1?'bor':'',addr.spfSaleStatus==1?'':'none']">
+                    <div class="guess border js-guess " :class="[addr.rqspfSingleSale==1?'bor':'',addr.rqspfSaleStatus==1?'':'none']">
                         <span>让胜 {{addr.rqspf.home_odds}}</span>
                         <span>让平 {{addr.rqspf.draw_odds}}</span>
                         <span>让负 {{addr.rqspf.away_odds}}</span>
                     </div>
-                    <div class="guess border " :class="[addr.rqspfSingleSale==1?'bor':'' , addr.spfSaleStatus==0?'no-m':'none']" >
+                    <div class="guess border " :class="[addr.rqspfSingleSale==1?'bor':'' , addr.rqspfSaleStatus==0?'no-m':'none']" >
                         <span>未开售</span>
                     </div>
                 </div>
@@ -52,8 +52,8 @@
         </div>
       </div>
     </div>
-    <zhangkai :sel="selzk"  v-if="show" @close='showzk'></zhangkai>
     </div>
+    <zhangkai :sel="selzk"  v-if="show" @close='showzk'></zhangkai>
   </div>
 </template>
 
@@ -85,7 +85,6 @@ export default {
       })
       this.lists = res.data
       this.$nextTick(() => {
-        console.log(this)
         this._initScroll()
       })
     }, res => {
@@ -104,9 +103,12 @@ export default {
       elem.show = !elem.show
     },
     _initScroll() {
-      this.appscroll = new BScroll(this.$refs.app, {})
-      console.log(this.appscroll)
-      this.containerscroll = new BScroll(this.$refs.container, {})
+      this.appscroll = new BScroll(this.$refs.app, {
+        click:true
+      })
+      // this.containerscroll = new BScroll(this.$refs.container, {
+      //   click:true
+      // })
     }
 
   },
@@ -132,8 +134,8 @@ html{
     background-color: #f2f2f2;
 }
 .app{
-  height: 100px;
-  overflow: scroll;
+  height: 100vh;
+  overflow: hidden;
 }
 .container{
     width: 100%;
@@ -282,146 +284,6 @@ html{
     font-size: 12px;
     z-index: 20;
 
-}
-.zk{
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 998;
-    overflow: hidden;
-    display: none;
-    overflow-y: hidden;
-}
-.zk-content{
-    position: absolute;
-    left: 15px;
-    right: 15px;
-    top: 50%;
-    bottom: 0;
-    transform: translateY(-50%);
-    box-sizing: border-box;
-    padding: 0 15px 55px;
-    height: 500px;
-    background: #fff;
-    border-radius: 10px;
-
-}
-.top-team{
-    width: 100%;
-}
-.team{
-    width: 100%;
-    display: flex;
-    height: 45px;
-    line-height: 30px;
-}
-.team>span{
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
-}
-.team>span:first-child{
-    flex: 1;
-}
-.team>span:nth-child(2){
-    flex: 1;
-}
-.team>span:last-child{
-    flex: 1;
-}
-.top-team .team>span:nth-child(2){
-    /* background: url(../assets/images/vs.png); */
-    background-size: 45px 45px;
-    width: 45px;
-    height: 45px;
-    position: absolute;
-    left: 50%;
-    top: -3%;
-    z-index: 80;
-    margin: 0 0 0 -22px;
-}
-.top-team>p{
-    text-align: center;
-    font-size: 12px;
-    color: #333;
-}
-.cont-team{
-    height: 380px;
-    overflow: scroll;
-}
-.cont-team .log{
-    width: 15px;
-    height: 15px;
-    text-align: center;
-    background: #f95858;
-    color: #fff;
-    font-size: 12px;
-    border-radius: 2px;
-    margin-left: 5px;
-}
-.cont-team .logf1{
-    width: 15px;
-    height: 15px;
-    text-align: center;
-    color:  #f95858;
-    font-size: 12px;
-    border-radius: 2px;
-    margin-left: 5px;
-}
-.cont-team h3{
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
-    font-size: 14px;
-    color: #333333;
-}
-table{
-    width: 100%;
-}
-.cont-spf table td,.cont-rqspf table td,.cont-zjqs table td,.cont-bf table td,.cont-bqc table td{
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    font-size: 12px;
-}
-.cont-bf table td span{
-    display: block;
-}
-.cont-spf table td span,.cont-rqspf table td span,.cont-zjqs table td span,.cont-bqc table td span{
-    display: inline-block;
-    width: 47%;
-}
-.cont-bf table td span{
-    height: 20px;
-    line-height: 20px;
-}
-.cont-team table td>span:last-child{
-    color: #c6c6c6;
-}
-.btn-team{
-    display: flex;
-    justify-content: space-around;
-    padding-top: 15px;
-}
-.btn-team span{
-    display: inline-block;
-    width: 120px;
-    height: 33px;
-    line-height: 33px;
-    text-align: center;
-    border-radius: 4px;
-    font-size: 12px;
-}
-.btn-team span:last-child{
-    background: #f21c0f;
-    color: #ffffff;
-}
-.btn-team span:first-child{
-    background: #cccccc;
-    color: #333;
 }
 .shopcar{
     position: fixed;
