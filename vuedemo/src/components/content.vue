@@ -5,7 +5,7 @@
     <div class="content" v-for="elem in lists.data" :key="elem.key">
       <div class="title">
         <span>{{elem.issue}}</span>
-        <i class="ic iconfont icon-xiaosanjiao" @click="toggle(elem)"></i>
+        <i class="ic iconfont icon-xiaosanjiao" @click="toggle(elem,$event)"></i>
         </div>
       <div class="items" v-for="addr in elem.contests" :key="addr.key" v-show="elem.show">
         <div class="con-item">
@@ -25,9 +25,9 @@
                 <div class="con-top">
                     <div class="z-num">0</div>
                         <div class="guess border js-guess" :class="[addr.spfSingleSale==1?'bor':'',addr.spfSaleStatus==1?'':'none']">
-                        <span>胜 {{addr.spf.home_odds}}</span>
-                        <span>平 {{addr.spf.draw_odds}}</span>
-                        <span>负 {{addr.spf.away_odds}}</span>
+                        <span @click="pitch($event,addr.stroed)" :class="addr.stroed[0][0]==1?'xz-red':''">胜 {{addr.spf.home_odds}}</span>
+                        <span @click="pitch($event,addr.stroed)" :class="addr.stroed[0][1]==1?'xz-red':''">平 {{addr.spf.draw_odds}}</span>
+                        <span @click="pitch($event,addr.stroed)" :class="addr.stroed[0][2]==1?'xz-red':''">负 {{addr.spf.away_odds}}</span>
                     </div>
                     <div class="guess border" :class="addr.spfSaleStatus==0?'no-m':'none'" >
                         <span>未开售</span>
@@ -36,17 +36,18 @@
                 <div class="con-top">
                     <div class="z-num"  :class="addr.rqspf.handicap > 0 ? 'z-red' : 'f-green'">{{addr.rqspf.handicap > 0 ? '+' + addr.rqspf.handicap : addr.rqspf.handicap}}</div>
                     <div class="guess border js-guess " :class="[addr.rqspfSingleSale==1?'bor':'',addr.rqspfSaleStatus==1?'':'none']">
-                        <span>让胜 {{addr.rqspf.home_odds}}</span>
-                        <span>让平 {{addr.rqspf.draw_odds}}</span>
-                        <span>让负 {{addr.rqspf.away_odds}}</span>
+                        <span @click="pitch($event,addr.stroed)" :class="addr.stroed[1][0]==1?'xz-red':''">让胜 {{addr.rqspf.home_odds}}</span>
+                        <span @click="pitch($event,addr.stroed)" :class="addr.stroed[1][1]==1?'xz-red':''">让平 {{addr.rqspf.draw_odds}}</span>
+                        <span @click="pitch($event,addr.stroed)" :class="addr.stroed[1][2]==1?'xz-red':''">让负 {{addr.rqspf.away_odds}}</span>
                     </div>
                     <div class="guess border " :class="[addr.rqspfSingleSale==1?'bor':'' , addr.rqspfSaleStatus==0?'no-m':'none']" >
                         <span>未开售</span>
                     </div>
                 </div>
-                <div class="open border" @click = "seldata(addr)" v-on:click="show=!show">
-                    <span>展开</span>
-                </div>
+
+            </div>
+            <div class="open border" @click = "seldata(addr,$event)" v-on:click="show=!show">
+                <span>展开</span>
             </div>
           </div>
         </div>
@@ -69,7 +70,7 @@ export default {
     return {
       lists: [],
       selzk: {},
-      show: false,
+      show: false
     }
   },
   created() {
@@ -79,9 +80,14 @@ export default {
         lotteryType: 'TC_JCZQ'
       })
     ).then(res => {
-      // 给每一组比赛添加一个show属性,默认是true
+      let _this = this
+      // 给每天的比赛添加一个show属性,默认是true
       res.data.data.map(function(item) {
         item.show = true
+        //给每场比赛添加一个二维数组
+        item.contests.map(function(cont){
+          cont.stroed=_this.setarr()
+        })
       })
       this.lists = res.data
       this.$nextTick(() => {
@@ -93,15 +99,29 @@ export default {
 
   },
   methods: {
-    seldata(addr) {
+    seldata(addr,e) {
       this.selzk = addr
+      console.log(e)
     },
     showzk() {
       this.show = !this.show
-      document.addEventListener('touchmove', function(e){e.preventDefault();}, false);
+
     },
-    toggle(elem) {
+    //创建二维数组
+    setarr(){
+        var arr = [];
+        for(var ai =0;ai<14;ai++){
+            arr[ai]=[];
+            for(var aj=0;aj<6;aj++){
+                arr[ai][aj]=0;
+            }
+        }
+        return arr;
+    },
+    toggle(elem,e) {
       elem.show = !elem.show
+      e.target.classList.toggle("icon-xiaosanjiao1");
+
     },
     _initScroll() {
       this.appscroll = new BScroll(this.$refs.app, {
@@ -110,6 +130,27 @@ export default {
       // this.containerscroll = new BScroll(this.$refs.container, {
       //   click:true
       // })
+    },
+    tabIndex(target,nodeList){
+      for(let i=0;i<nodeList.length;i++){
+        if(target===nodeList[i]){
+            return i;
+        }
+      }
+    },
+    pitch(e,stroed){
+      e.target.classList.toggle("xz-red")
+      let nodeList = e.target.parentNode.children
+      let y = this.tabIndex(e.target,nodeList)
+      let nodeListY =e.target.parentNode.parentNode.parentNode.children
+      let targety = e.target.parentNode.parentNode
+      let x = this.tabIndex(targety,nodeListY)
+      if(stroed[x][y]==0){
+        stroed[x][y]=1
+      }else{
+        stroed[x][y]=0
+      }
+      console.log(stroed)
     }
 
   },
@@ -183,7 +224,7 @@ html{
 }
 .item-right{
     width: 80%;
-
+    position: relative;
 }
 .r-title{
     display: flex;
@@ -210,7 +251,7 @@ html{
     display: flex;
 }
 .r-cont{
-    position: relative;
+
     padding-right: 35px;
     font-size: 12px;
 }
@@ -270,7 +311,7 @@ html{
     height: 60px;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 44px;
     display: flex;
     align-items: center;
     border-radius: 0 4px 4px 0;

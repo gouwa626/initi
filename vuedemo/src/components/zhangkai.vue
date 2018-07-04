@@ -16,16 +16,16 @@
                   <h3>胜平负<span class="log">单</span></h3>
                   <table class="border-topleft">
                       <tbody>
-                      <tr :class="sel.spfSaleStatus==0?'no-m':''">
-                          <td class="border-rightbottom">
-                              <span>胜</span>
-                              <span>{{sel.spf.home_odds}}</span>
+                      <tr :class="sel.spfSaleStatus==0?'no-m':''"  @click.stop>
+                          <td @click="pitchzk($event)" class="border-rightbottom"  :class="sel.stroed[0][0]==1?'xz-zk-red':''">
+                              <span @click.stop>胜</span>
+                              <span @click.stop>{{sel.spf.home_odds}}</span>
                           </td>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[0][1]==1?'xz-zk-red':''">
                               <span>平</span>
                               <span>{{sel.spf.draw_odds}}</span>
                           </td >
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[0][2]==1?'xz-zk-red':''">
                               <span>负</span>
                               <span>{{sel.spf.away_odds}}</span>
                           </td>
@@ -39,15 +39,15 @@
                   <table class="border-topleft">
                       <tbody  :class="sel.rqspfSaleStatus==0?'no-m':''">
                       <tr>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[1][0]==1?'xz-zk-red':''">
                               <span>胜</span>
                               <span>{{sel.rqspf.home_odds}}</span>
                           </td>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[1][1]==1?'xz-zk-red':''">
                               <span>平</span>
                               <span>{{sel.rqspf.draw_odds}}</span>
                           </td >
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[1][2]==1?'xz-zk-red':''">
                               <span>负</span>
                               <span>{{sel.rqspf.away_odds}}</span>
                           </td>
@@ -60,37 +60,37 @@
                   <table class="border-topleft">
                       <tbody :class="sel.jqsSaleStatus==0?'no-m':''">
                       <tr >
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[2][0]==1?'xz-zk-red':''">
                               <span>0球</span>
                               <span>{{sel.jqs.zero_odds}}</span>
                           </td>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[2][1]==1?'xz-zk-red':''">
                               <span>1球</span>
                               <span>{{sel.jqs.one_odds}}</span>
                           </td>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[2][2]==1?'xz-zk-red':''">
                               <span>2球</span>
                               <span>{{sel.jqs.two_odds}}</span>
                           </td>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[2][3]==1?'xz-zk-red':''">
                               <span>3球</span>
                               <span>{{sel.jqs.three_odds}}</span>
                           </td>
                       </tr>
                       <tr>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[3][0]==1?'xz-zk-red':''">
                               <span>4球</span>
                               <span>{{sel.jqs.four_odds}}</span>
                           </td>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[3][1]==1?'xz-zk-red':''">
                               <span>5球</span>
                               <span>{{sel.jqs.five_odds}}</span>
                           </td>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[3][2]==1?'xz-zk-red':''">
                               <span>6球</span>
                               <span>{{sel.jqs.six_odds}}</span>
                           </td>
-                          <td class="border-rightbottom">
+                          <td class="border-rightbottom" :class="sel.stroed[3][3]==1?'xz-zk-red':''">
                               <span>7+球</span>
                               <span>{{sel.jqs.seven_odds}}</span>
                           </td>
@@ -105,52 +105,110 @@
                       <!-- <tbody  :class="indexcontests.bfSaleStatus==0?'no-m':''"> -->
                       <tbody>
                       <tr>
-                          <td class="border-rightbottom"><span>1:0</span><span>{{sel.bf.home_1v0_odds}}</span></td>
-                          <td class="border-rightbottom"><span>2:0</span><span>{{sel.bf.home_2v0_odds}}</span></td>
-                          <td class="border-rightbottom"><span>2:1</span><span>{{sel.bf.home_2v1_odds}}</span></td>
-                          <td class="border-rightbottom"><span>3:0</span><span>{{sel.bf.home_3v0_odds}}</span></td>
-                          <td class="border-rightbottom"><span>3:1</span><span>{{sel.bf.home_3v1_odds}}</span></td>
-                          <td class="border-rightbottom"><span>3:2</span><span>{{sel.bf.home_3v2_odds}}</span></td>
+                          <td class="border-rightbottom" :class="sel.stroed[4][0]==1?'xz-zk-red':''">
+                            <span>1:0</span><span>{{sel.bf.home_1v0_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[4][1]==1?'xz-zk-red':''">
+                            <span>2:0</span><span>{{sel.bf.home_2v0_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[4][2]==1?'xz-zk-red':''">
+                            <span>2:1</span><span>{{sel.bf.home_2v1_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[4][3]==1?'xz-zk-red':''">
+                            <span>3:0</span><span>{{sel.bf.home_3v0_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[4][4]==1?'xz-zk-red':''">
+                            <span>3:1</span><span>{{sel.bf.home_3v1_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[4][5]==1?'xz-zk-red':''">
+                            <span>3:2</span><span>{{sel.bf.home_3v2_odds}}</span>
+                          </td>
                       </tr>
                       <tr>
-                          <td class="border-rightbottom"><span>4:0</span><span>{{sel.bf.home_4v0_odds}}</span></td>
-                          <td class="border-rightbottom"><span>4:1</span><span>{{sel.bf.home_4v1_odds}}</span></td>
-                          <td class="border-rightbottom"><span>4:2</span><span>{{sel.bf.home_4v2_odds}}</span></td>
-                          <td class="border-rightbottom"><span>5:0</span><span>{{sel.bf.home_5v0_odds}}</span></td>
-                          <td class="border-rightbottom"><span>5:1</span><span>{{sel.bf.home_5v1_odds}}</span></td>
-                          <td class="border-rightbottom"><span>5:2</span><span>{{sel.bf.home_5v2_odds}}</span></td>
+                          <td class="border-rightbottom" :class="sel.stroed[5][0]==1?'xz-zk-red':''">
+                            <span>4:0</span><span>{{sel.bf.home_4v0_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[5][1]==1?'xz-zk-red':''">
+                            <span>4:1</span><span>{{sel.bf.home_4v1_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[5][2]==1?'xz-zk-red':''">
+                            <span>4:2</span><span>{{sel.bf.home_4v2_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[5][3]==1?'xz-zk-red':''">
+                            <span>5:0</span><span>{{sel.bf.home_5v0_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[5][4]==1?'xz-zk-red':''">
+                            <span>5:1</span><span>{{sel.bf.home_5v1_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[5][5]==1?'xz-zk-red':''">
+                            <span>5:2</span><span>{{sel.bf.home_5v2_odds}}</span>
+                          </td>
                       </tr>
                       <tr>
-                          <td class="border-rightbottom" colspan="6">
+                          <td class="border-rightbottom" colspan="6" :class="sel.stroed[6][0]==1?'xz-zk-red':''">
                               <span>其他胜</span>
                               <span>{{sel.bf.home_others_odds}}</span>
                           </td>
                       </tr>
                       <tr>
-                          <td class="border-rightbottom"><span>0:0</span><span>{{sel.bf.draw_0v0_odds}}</span></td>
-                          <td class="border-rightbottom"><span>1:1</span><span>{{sel.bf.draw_1v1_odds}}</span></td>
-                          <td class="border-rightbottom"><span>2:2</span><span>{{sel.bf.draw_2v2_odds}}</span></td>
-                          <td class="border-rightbottom"><span>3:3</span><span>{{sel.bf.draw_3v3_odds}}</span></td>
-                          <td class="border-rightbottom" colspan="2"><span>其他平</span><span>{{sel.bf.draw_others_odds}}</span></td>
+                          <td class="border-rightbottom" :class="sel.stroed[7][0]==1?'xz-zk-red':''">
+                            <span>0:0</span><span>{{sel.bf.draw_0v0_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[7][1]==1?'xz-zk-red':''">
+                            <span>1:1</span><span>{{sel.bf.draw_1v1_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[7][2]==1?'xz-zk-red':''">
+                            <span>2:2</span><span>{{sel.bf.draw_2v2_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[7][3]==1?'xz-zk-red':''">
+                            <span>3:3</span><span>{{sel.bf.draw_3v3_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" colspan="2" :class="sel.stroed[7][4]==1?'xz-zk-red':''">
+                            <span>其他平</span><span>{{sel.bf.draw_others_odds}}</span>
+                          </td>
                       </tr>
                       <tr>
-                          <td  class="border-rightbottom"><span>0:1</span><span>{{sel.bf.away_0v1_odds}}</span></td>
-                          <td  class="border-rightbottom"><span>0:2</span><span>{{sel.bf.away_0v2_odds}}</span></td>
-                          <td class="border-rightbottom"><span>1:2</span><span>{{sel.bf.away_1v2_odds}}</span></td>
-                          <td class="border-rightbottom"><span>0:3</span><span>{{sel.bf.away_0v3_odds}}</span></td>
-                          <td class="border-rightbottom"><span>1:3</span><span>{{sel.bf.away_1v3_odds}}</span></td>
-                          <td class="border-rightbottom"><span>2:3</span><span>{{sel.bf.away_2v3_odds}}</span></td>
+                          <td  class="border-rightbottom" :class="sel.stroed[8][0]==1?'xz-zk-red':''">
+                            <span>0:1</span><span>{{sel.bf.away_0v1_odds}}</span>
+                          </td>
+                          <td  class="border-rightbottom" :class="sel.stroed[8][1]==1?'xz-zk-red':''">
+                            <span>0:2</span><span>{{sel.bf.away_0v2_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[8][2]==1?'xz-zk-red':''">
+                            <span>1:2</span><span>{{sel.bf.away_1v2_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[8][3]==1?'xz-zk-red':''">
+                            <span>0:3</span><span>{{sel.bf.away_0v3_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[8][4]==1?'xz-zk-red':''">
+                            <span>1:3</span><span>{{sel.bf.away_1v3_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[8][5]==1?'xz-zk-red':''">
+                            <span>2:3</span><span>{{sel.bf.away_2v3_odds}}</span>
+                          </td>
                       </tr>
                       <tr>
-                          <td class="border-rightbottom"><span>0:4</span><span>{{sel.bf.away_0v4_odds}}</span></td>
-                          <td class="border-rightbottom"><span>1:4</span><span>{{sel.bf.away_1v4_odds}}</span></td>
-                          <td class="border-rightbottom"><span>2:4</span><span>{{sel.bf.away_2v4_odds}}</span></td>
-                          <td class="border-rightbottom"><span>0:5</span><span>{{sel.bf.away_0v5_odds}}</span></td>
-                          <td class="border-rightbottom"><span>1:5</span><span>{{sel.bf.away_1v5_odds}}</span></td>
-                          <td class="border-rightbottom"><span>2:5</span><span>{{sel.bf.away_2v5_odds}}</span></td>
+                          <td class="border-rightbottom" :class="sel.stroed[9][0]==1?'xz-zk-red':''">
+                            <span>0:4</span><span>{{sel.bf.away_0v4_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[9][1]==1?'xz-zk-red':''">
+                            <span>1:4</span><span>{{sel.bf.away_1v4_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[9][2]==1?'xz-zk-red':''">
+                            <span>2:4</span><span>{{sel.bf.away_2v4_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[9][3]==1?'xz-zk-red':''">
+                            <span>0:5</span><span>{{sel.bf.away_0v5_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[9][4]==1?'xz-zk-red':''">
+                            <span>1:5</span><span>{{sel.bf.away_1v5_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[9][5]==1?'xz-zk-red':''">
+                            <span>2:5</span><span>{{sel.bf.away_2v5_odds}}</span>
+                          </td>
                       </tr>
                       <tr>
-                          <td class="border-rightbottom" colspan="6">
+                          <td class="border-rightbottom" colspan="6" :class="sel.stroed[10][0]==1?'xz-zk-red':''">
                               <span>其他负</span>
                               <span>{{sel.bf.away_others_odds}}</span>
                           </td>
@@ -163,19 +221,37 @@
                   <table class="border-topleft">
                       <tbody :class="sel.bqcSaleStatus==0?'no-m':''">
                       <tr>
-                          <td class="border-rightbottom"><span>胜胜</span><span>{{sel.bqc.home_home_odds}}</span></td>
-                          <td class="border-rightbottom"><span>胜平</span><span>{{sel.bqc.away_draw_odds}}</span></td>
-                          <td class="border-rightbottom"><span>胜负</span><span>{{sel.bqc.home_away_odds}}</span></td>
+                          <td class="border-rightbottom" :class="sel.stroed[11][0]==1?'xz-zk-red':''">
+                            <span>胜胜</span><span>{{sel.bqc.home_home_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[11][1]==1?'xz-zk-red':''">
+                            <span>胜平</span><span>{{sel.bqc.away_draw_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[11][2]==1?'xz-zk-red':''">
+                            <span>胜负</span><span>{{sel.bqc.home_away_odds}}</span>
+                          </td>
                       </tr>
                       <tr>
-                          <td class="border-rightbottom"><span>平胜</span><span>{{sel.bqc.draw_home_odds}}</span></td>
-                          <td class="border-rightbottom"><span>平平</span><span>{{sel.bqc.draw_draw_odds}}</span></td>
-                          <td class="border-rightbottom"><span>平负</span><span>{{sel.bqc.draw_away_odds}}</span></td>
+                          <td class="border-rightbottom" :class="sel.stroed[12][0]==1?'xz-zk-red':''">
+                            <span>平胜</span><span>{{sel.bqc.draw_home_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[12][1]==1?'xz-zk-red':''">
+                            <span>平平</span><span>{{sel.bqc.draw_draw_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[12][2]==1?'xz-zk-red':''">
+                            <span>平负</span><span>{{sel.bqc.draw_away_odds}}</span>
+                          </td>
                       </tr>
                       <tr>
-                          <td class="border-rightbottom"><span>负胜</span><span>{{sel.bqc.away_home_odds}}</span></td>
-                          <td class="border-rightbottom"><span>负平</span><span>{{sel.bqc.away_draw_odds}}</span></td>
-                          <td class="border-rightbottom"><span>负负</span><span>{{sel.bqc.away_away_odds}}</span></td>
+                          <td class="border-rightbottom" :class="sel.stroed[13][0]==1?'xz-zk-red':''">
+                            <span>负胜</span><span>{{sel.bqc.away_home_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[13][1]==1?'xz-zk-red':''">
+                            <span>负平</span><span>{{sel.bqc.away_draw_odds}}</span>
+                          </td>
+                          <td class="border-rightbottom" :class="sel.stroed[13][2]==1?'xz-zk-red':''">
+                            <span>负负</span><span>{{sel.bqc.away_away_odds}}</span>
+                          </td>
                       </tr>
                       </tbody>
                   </table>
@@ -201,15 +277,18 @@ export default {
   },
   data() {
     return {
-      show: true
+      show: true,
+      selq:[]
     }
   },
   created() {
+    this.selq = JSON.parse(JSON.stringify(this.sel.stroed))
+    console.log(this.selq)
     //do something after creating vue instance
     this.$nextTick(() => {
       console.log(this)
       this.conteamscroll = new BScroll(this.$refs.conteam, {
-        click: true
+        // click: true
       })
     })
   },
@@ -217,6 +296,10 @@ export default {
     close() {
       this.show = !this.show
       this.$emit('close')
+    },
+    pitchzk(e){
+      e.target.classList.toggle("xz-zk-red")
+      console.log(e.target)
     }
   }
 }
@@ -245,6 +328,10 @@ export default {
     background: #fff;
     border-radius: 10px;
 
+}
+.xz-zk-red,.cli-red{
+    color: #fff ;
+    background-color: #f95858;
 }
 .top-team{
     width: 100%;
