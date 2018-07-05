@@ -99,9 +99,9 @@ export default {
 
   },
   methods: {
-    seldata(addr,e) {
+    seldata(addr,arr) {
       this.selzk = addr
-      console.log(e)
+      // console.log(arr)
     },
     showzk() {
       this.show = !this.show
