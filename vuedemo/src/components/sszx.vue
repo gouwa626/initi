@@ -56,7 +56,6 @@ html,body{
 
 }
 .league{
-  padding:10px;
   width: 33.33%;
   font-size: 12px;
   padding: 0 0 6px 0;

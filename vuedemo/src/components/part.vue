@@ -108,7 +108,7 @@ export default {
 .sheet thead th{
   padding:6px 0;
 }
-.sheet .bs-th{
+.sheet .bs-th,.sheet tr td:nth-child(1){
   color: #8a8a8a;
 }
 .sheet th:first-child{
@@ -127,7 +127,18 @@ export default {
   line-height: 16px;
   color: #8a8a8a;
 }
+
 .sheet tr {
   height: 30px;
+}
+.sheet td{
+  padding:12px 0;
+}
+.sheet tr td:nth-child(2),.sheet tr td:nth-child(4){
+  color:#fff;
+}
+.sheet tr td:nth-child(3){
+  color: #ff8087;
+  font-weight: 700;
 }
 </style>
