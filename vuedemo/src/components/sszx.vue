@@ -2,14 +2,14 @@
   <div>
     <div class="leaguelist">
       <div class="league" v-for="elem in league_list" :key="elem.key"
-                @click="jump($event)">
+                @click="jump(elem,$event)">
         <div class="leagimg">
           <img :src="elem.logo_path">
         </div>
         <p>{{elem.league_name}}</p>
       </div>
     </div>
-    <part v-if="show"></part>
+    <part v-if="show"  :elem="league" @close='close'></part>
 </div>
 </template>
 
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       league_list: [],
+      league:[],
       show: false
     }
   },
@@ -30,12 +31,19 @@ export default {
     //do something after creating vue instance
     this.axios.get("https://lu.cp988.cn/api/leaguelist").then(res => {
       this.league_list = res.data.league_list
+    }, res => {
+      console.log("Error")
     })
   },
   methods: {
-    jump(e) {
+    jump(elem,e) {
       this.show = !this.show
       console.log(e)
+      this.league = elem
+      console.log(this.league)
+    },
+    close(){
+      this.show = !this.show
     }
   }
 

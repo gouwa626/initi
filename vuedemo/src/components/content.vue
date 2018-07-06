@@ -105,7 +105,6 @@ export default {
     },
     showzk() {
       this.show = !this.show
-
     },
     //创建二维数组
     setarr(){
