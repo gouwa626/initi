@@ -3,7 +3,7 @@
     <div class="header">
       <i class="iconfont icon-zuo" @click="close"></i>
       <span class="text">{{elem.league_name}}</span>
-      <span class="select">
+      <span class="select" v-show="selecttab=='sheet'">
         <select class="seasons" name="" v-model="selval">
           <option :value="val" v-for="(val,index) in list.season_list" :key="val.key">{{index}}</option>
         </select>
@@ -11,56 +11,33 @@
     </div>
     <div class="detail">
       <div class="tab">
-        <div class="tab-items">
-          <span class="tab-active">赛程</span>
+        <div class="tab-items" @click="pictab('sheet')">
+          <span :class="selecttab=='sheet'?'tab-active':''">赛程</span>
         </div>
-        <div class="tab-items">
-          <span>积分</span>
+        <div class="tab-items" @click="pictab('score')">
+          <span :class="selecttab=='score'?'tab-active':''">积分</span>
         </div>
-        <div class="tab-items">
-          <span>射手</span>
+        <div class="tab-items" @click="pictab('shooter')">
+          <span :class="selecttab=='shooter'?'tab-active':''">射手</span>
         </div>
       </div>
-      <div class="sub">
-        <table class="sheet">
-          <thead>
-            <th>
-              <span class="lastround" :class="[list.last_section_id==''?' ':'active']"
-                @click = "getround(list.last_section_id,list.last_turn_id)"
-              >上一轮</span>
-            </th>
-            <th colspan="2" class="bs-th">
-              <span v-if="list.turn_name!=''">第{{list.turn_name}}轮</span>
-              <span v-else-if="list.curr_section_name!=''">{{list.curr_section_name}}</span>
-              <span v-else>第{{list.turn_name}}轮</span>
-            </th>
-            <th>
-              <span class="nextround" :class="list.next_section_id==''?' ':'active'"
-                @click = "getround(list.next_section_id,list.next_turn_id)"
-              >下一轮</span>
-            </th>
-          </thead>
-          <tbody>
-            <tr v-for="match in list.match_list" :key="match.key"  v-if="!list.match_list==''">
-              <td width="25%">{{match.match_time|timestampToTime}}</td>
-              <td width="25%">{{match.home_name}}</td>
-              <td width="25%" v-if="match.score==''">VS</td>
-              <td width="25%" v-else>{{match.score}}</td>
-              <td width="25%">{{match.guest_name}}</td>
-            </tr>
-            <tr v-if="list.match_list==''" class="listnull">
-              <td colspan="4">暂无数据</td>
-            </tr>
-          </tbody>
-
-        </table>
-      </div>
+      <sheet :schedule="list,elem,selval" v-show="selecttab=='sheet'"></sheet>
+      <score :scores="elem,selval" v-show="selecttab=='score'"></score>
+      <shooter v-show="selecttab=='shooter'"></shooter>
     </div>
   </div>
 </template>
 
 <script>
+import sheet from './sheet'
+import score from './score'
+import shooter from './shooter'
 export default {
+  components: {
+    sheet,
+    score,
+    shooter
+  },
   props: {
     elem: {
       typeof: Object
@@ -70,7 +47,8 @@ export default {
     return {
       show: true,
       list: [],
-      selval: ''
+      selval: '',
+      selecttab:'sheet'
     }
   },
   created() {
@@ -97,6 +75,9 @@ export default {
     close() {
       this.show = !this.show
       this.$emit('close')
+    },
+    pictab(e){
+      this.selecttab=e
     },
     getround(section_id,trunid){
       console.log(this.elem.league_id)
@@ -204,56 +185,5 @@ export default {
   border-bottom: 2px solid #fff;
   color: #fff;
 }
-.sub{
-  margin: 6px 9px;
-  height: 100vh;
-  overflow: scroll;
-}
-.sheet{
-  width: 100%;
-}
-.sheet thead th{
-  padding:6px 0;
-}
-.sheet .bs-th,.sheet tr td:nth-child(1){
-  color: #8a8a8a;
-}
-.sheet th:first-child{
-  text-align: left;
-}
-.sheet th:last-child{
-  text-align:right;
-}
-.lastround,.nextround{
-  display: inline-block;
-  width: 70px;
-  height: 16px;
-  border: 1px solid #8a8a8a;
-  border-radius: 4px;
-  text-align: center;
-  line-height: 16px;
-  color: #8a8a8a;
-}
-.active{
-  color: #58cfaf;
-  border: 1px solid #58cfaf;
-}
-.sheet tr {
-  height: 30px;
-  background-color: #28292e;
-}
-.sub .sheet .listnull td{
-  color: #fff;
-}
-.sheet td{
-  padding:10px 0;
-  vertical-align: middle;
-}
-.sheet tr td:nth-child(2),.sheet tr td:nth-child(4){
-  color:#fff;
-}
-.sheet tr td:nth-child(3){
-  color: #ff8087;
-  font-weight: 700;
-}
+
 </style>
