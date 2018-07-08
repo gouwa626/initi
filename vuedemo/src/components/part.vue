@@ -3,8 +3,8 @@
     <div class="header">
       <i class="iconfont icon-zuo" @click="close"></i>
       <span class="text">{{elem.league_name}}</span>
-      <span class="select" v-show="selecttab=='sheet'">
-        <select class="seasons" name="" v-model="selval">
+      <span class="select" >
+        <select class="seasons" name="" v-model="selval" v-show="selecttab=='sheet'">
           <option :value="val" v-for="(val,index) in list.season_list" :key="val.key">{{index}}</option>
         </select>
       </span>
@@ -23,7 +23,7 @@
       </div>
       <sheet :schedule="list,elem,selval" v-show="selecttab=='sheet'"></sheet>
       <score :scores="elem,selval" v-show="selecttab=='score'"></score>
-      <shooter v-show="selecttab=='shooter'"></shooter>
+      <shooter :shooter="elem,selval" v-show="selecttab=='shooter'"></shooter>
     </div>
   </div>
 </template>
@@ -147,11 +147,10 @@ export default {
   width: 50px;
   height: 18px;
   margin: 10px;
-  border: 1px solid #fff;
-  border-radius: 4px;
+
 }
 .selectnone{
-   float: right;
+    float: right;
     width: 50px;
     height: 18px;
     margin: 10px;
@@ -165,6 +164,8 @@ export default {
   color: #fff;
   padding-left: 4px;
   outline: none;
+  border: 1px solid #fff;
+  border-radius: 4px;
 }
 .tab{
   background-color: #56cfb0;
