@@ -12,7 +12,7 @@
         <span v-else>第{{sheetlist.turn_name}}轮</span>
       </li>
       <li>
-        <span class="nextround" :class="sheetlist.next_section_id==''?' ':'active'"
+        <span class="nextround" :class="[sheetlist.next_section_id==''?' ':'active']"
           @click = "getround(sheetlist.next_section_id,sheetlist.next_turn_id)"
         >下一轮</span>
       </li>
@@ -97,7 +97,8 @@ export default {
   },
   filters: {
     timestampToTime(timestamp) {
-      var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var timestemp = timestamp.replace(/\s+/g,'T');
+      var date = new Date(timestemp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + '-';
       var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
       var D = '.' + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
@@ -111,10 +112,10 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .sub{
   margin: 6px 9px;
-  height: 100vh;
+  height: 86vh;
   overflow: scroll;
 }
 .sheet{

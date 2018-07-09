@@ -28,7 +28,8 @@
         </tr>
       </tbody>
     </table>
-    <table class="scorecont" v-else-if="scorelist.all instanceof Array">
+
+    <table class="scorecontent" v-if="scorelist.all instanceof Array">
       <thead>
         <th>A组</th>
         <th>球队</th>
@@ -42,7 +43,7 @@
       <tbody>
         <tr v-for="mat in scorelist.all"
        :key="mat.key">
-          <td>{{mat.ranking}}</td>
+          <td><span class="promotion" :style="{background:mat.promotion_color}">{{mat.ranking}}</span></td>
           <td>{{mat.team_name}}</td>
           <td>{{mat.played}}</td>
           <td>{{mat.played_won}}</td>
@@ -53,6 +54,12 @@
         </tr>
       </tbody>
     </table>
+    <div class="footer" v-if="scorelist.all instanceof Array">
+      <div class="fitems" v-for="(color,index) in scorelist.promotion_list" :key="color.key">
+        <span :style="{background:color}"></span>
+        <span>{{index}}</span>
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -85,29 +92,66 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .score{
   margin: 6px 9px;
-  height: 100vh;
+  height: 86vh;
   overflow: scroll;
 }
-.scorecont{
+.scorecont,.scorecontent{
   width: 100%;
   color: #fff;
 }
-.scorecont tbody{
+.scorecontent{
+  margin-bottom: 50px;
+}
+.scorecont tbody,.scorecontent tbody{
   background-color: #28292e;
   border-radius: 8px;
 }
-.scorecont th{
+.scorecont th,.scorecontent th{
   padding: 10px 0;
+  color: #989898;
 }
 .win{
   color: #ff8087;
-    font-weight: 700;
+  font-weight: 700;
+}
+.promotion{
+  display: block;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  margin: 0 auto;
+  border-radius: 100%;
 }
 .scorecont td{
   padding: 16px 0;
 
+}
+.scorecontent td{
+  padding: 6px 0;
+}
+.footer{
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: 45px;
+  color: #b4b4b4;
+  background: #28292e;
+  padding: 0 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.footer .fitems :first-child{
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  vertical-align: middle;
 }
 </style>

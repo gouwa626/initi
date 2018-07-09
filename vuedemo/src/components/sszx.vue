@@ -38,9 +38,7 @@ export default {
   methods: {
     jump(elem,e) {
       this.show = !this.show
-      console.log(e)
       this.league = elem
-      console.log(this.league)
     },
     close(){
       this.show = !this.show
@@ -50,7 +48,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" >
 html,body{
   background: #eaeaea;
 }

@@ -54,7 +54,6 @@ export default {
   created() {
     //do something after creating vue instance
     this.axios.get("https://lu.cp988.cn/api/matchlist?league_id=" + this.elem.league_id + "").then(res => {
-      console.log(res)
       this.list = res.data
       this.selval = res.data.curr_season_id
     }, res => {
@@ -80,13 +79,9 @@ export default {
       this.selecttab=e
     },
     getround(section_id,trunid){
-      console.log(this.elem.league_id)
-      console.log(section_id)
-      console.log(trunid)
       this.axios.get("https://lu.cp988.cn/api/matchlist?league_id=" + this.elem.league_id +
       "&season_id=" + this.selval + "&section_id=" + section_id+ "&turn_id=" + trunid
       ).then(res => {
-        console.log(res)
         this.list = res.data
       }, res => {
         console.log("Error")
@@ -110,7 +105,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .part{
   position: fixed;
   left: 0;
@@ -118,7 +113,7 @@ export default {
   right: 0;
   bottom: 0;
   background: #1e2126;
-  z-index: 20;
+  z-index: 998;
   font-size: 12px;
   overflow: hidden;
 }

@@ -53,10 +53,10 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .shooter{
   margin: 6px 9px;
-  height: 100vh;
+  height: 86vh;
   overflow: scroll;
 }
 .shootertab{
