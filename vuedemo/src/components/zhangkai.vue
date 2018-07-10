@@ -338,7 +338,7 @@ export default {
     border-radius: 10px;
 
 }
-.xz-zk-red,.cli-red{
+.zk .zk-content .cont-team .xz-zk-red,.cli-red{
     color: #fff ;
     background-color: #f95858;
 }

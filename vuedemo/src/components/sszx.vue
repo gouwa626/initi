@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-    <div class="leaguelist">
+    <div class="leaguelist" >
       <div class="league" v-for="elem in league_list" :key="elem.key"
                 @click="jump(elem,$event)">
         <div class="leagimg">
@@ -9,7 +9,9 @@
         <p>{{elem.league_name}}</p>
       </div>
     </div>
-    <part v-if="show"  :elem="league" @close='close'></part>
+    <transition name="slide-fade">
+      <part v-if="show"  :elem="league" @close='close'></part>
+    </transition>
 </div>
 </template>
 
@@ -24,7 +26,8 @@ export default {
     return {
       league_list: [],
       league:[],
-      show: false
+      show: false,
+      pageScrollYoffset: 0 // 保存滚动条位置
     }
   },
   created() {
@@ -36,19 +39,58 @@ export default {
     })
   },
   methods: {
+    getScrollTop(){ // 获取滚动条位置
+        let scrollTop=0;
+        if(document.documentElement&&document.documentElement.scrollTop){
+            scrollTop=document.documentElement.scrollTop;
+        }else if(document.body){
+            scrollTop=document.body.scrollTop;
+        }
+        return scrollTop;
+    },
     jump(elem,e) {
+      this.pageScrollYoffset = this.getScrollTop();
       this.show = !this.show
       this.league = elem
     },
     close(){
       this.show = !this.show
     }
-  }
+  },
+  watch:{
+    show(newVal, oldVal){
+      if (newVal == true) {
+        let cssStr = "overflow-y: hidden; height: 100%;";
+        document.getElementsByTagName('html')[0].style.cssText = cssStr;
+        document.body.style.cssText = cssStr;
+      } else {
+        let cssStr = "overflow-y: auto; height: auto;";
+        document.getElementsByTagName('html')[0].style.cssText = cssStr;
+        document.body.style.cssText = cssStr;
+      }
+
+      // 下面需要这两行代码，兼容不同浏览器
+      document.body.scrollTop = this.pageScrollYoffset;
+      window.scroll(0, this.pageScrollYoffset);
+      }
+    }
+
 
 }
 </script>
 
 <style lang="css" >
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
 html,body{
   background: #eaeaea;
 }
@@ -58,8 +100,8 @@ html,body{
   display: flex;
   flex-wrap:wrap;
 }
-.leaguelist>.league:nth-child(3n){
-
+.open{
+  position: fixed;
 }
 .league{
   width: 33.33%;

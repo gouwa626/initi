@@ -78,7 +78,7 @@ export default {
     }
   },
   watch: {
-    //获取到父组件的数据后保存
+    //接受到父组件的数据后保存
    schedule: function (newQuestion, oldQuestion) {
      this.sheetlist = newQuestion
    }

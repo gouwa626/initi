@@ -70,7 +70,8 @@ export default {
     return {
       lists: [],
       selzk: {},
-      show: false
+      show: false,
+      pageScrollYoffset:0
     }
   },
   created() {
@@ -99,9 +100,19 @@ export default {
 
   },
   methods: {
+    getScrollTop(){ // 获取滚动条位置
+        let scrollTop=0;
+        if(document.documentElement&&document.documentElement.scrollTop){
+            scrollTop=document.documentElement.scrollTop;
+        }else if(document.body){
+            scrollTop=document.body.scrollTop;
+        }
+        return scrollTop;
+    },
     seldata(addr,arr) {
       this.selzk = addr
       // console.log(arr)
+      this.pageScrollYoffset = this.getScrollTop();
     },
     showzk() {
       this.show = !this.show
@@ -149,10 +160,27 @@ export default {
       }else{
         stroed[x][y]=0
       }
-      console.log(stroed)
+
     }
 
   },
+  watch:{
+    show(newVal, oldVal){
+      if (newVal == true) {
+        let cssStr = "overflow-y: hidden; height: 100%;";
+        document.getElementsByTagName('html')[0].style.cssText = cssStr;
+        document.body.style.cssText = cssStr;
+      } else {
+        let cssStr = "overflow-y: auto; height: auto;";
+        document.getElementsByTagName('html')[0].style.cssText = cssStr;
+        document.body.style.cssText = cssStr;
+      }
+
+      // 下面需要这两行代码，兼容不同浏览器
+      document.body.scrollTop = this.pageScrollYoffset;
+      window.scroll(0, this.pageScrollYoffset);
+      }
+    },
 
   filters: {
     timestampToTime(timestamp) {
@@ -230,13 +258,14 @@ html{
     display: flex;
     height: 44px;
     line-height: 44px;
+    font-size: 14px;
 }
 .r-title>span{
     color: #333;
     font-weight: 700;
 }
 .r-title>span:first-child{
-    flex: 6;
+    flex: 1;
     text-align: right;
 }
 .r-title>span:nth-child(2){
@@ -244,7 +273,7 @@ html{
     text-align: center;
 }
 .r-title>span:last-child{
-    flex: 7;
+    flex: 1;
     text-align: left;
 }
 .con-top{
