@@ -12,13 +12,13 @@
     <div class="detail">
       <div class="tab">
         <div class="tab-items" @click="pictab('sheet')">
-          <span :class="selecttab=='sheet'?'tab-active':''">赛程</span>
+          <span :class="selecttab=='sheet'?'tab-active':''">{{tabs.sheet}}</span>
         </div>
         <div class="tab-items" @click="pictab('score')">
-          <span :class="selecttab=='score'?'tab-active':''">积分</span>
+          <span :class="selecttab=='score'?'tab-active':''">{{tabs.score}}</span>
         </div>
         <div class="tab-items" @click="pictab('shooter')">
-          <span :class="selecttab=='shooter'?'tab-active':''">射手</span>
+          <span :class="selecttab=='shooter'?'tab-active':''">{{tabs.shooter}}</span>
         </div>
       </div>
       <sheet :schedule="list,elem,selval" v-show="selecttab=='sheet'"></sheet>
@@ -48,6 +48,7 @@ export default {
       show: true,
       list: [],
       selval: '',
+      tabs:{sheet:'赛程',score:'积分', shooter:'射手'},
       selecttab:'sheet'
     }
   },

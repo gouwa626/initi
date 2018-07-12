@@ -1,6 +1,6 @@
 <template lang="html">
 <div class="shooter">
-  <div>
+  <div class="shoot">
     <table class="shootertab">
       <thead>
         <th>排名</th>
@@ -59,6 +59,9 @@ export default {
   height: 86vh;
   overflow: scroll;
 }
+.shoot{
+  padding-bottom: 18%;
+}
 .shootertab{
   width: 100%;
 }
@@ -79,6 +82,7 @@ export default {
   margin: 0 auto;
   border-radius: 100%;
 }
+
 .shootertab tbody tr{
   line-height: 41px;
 }

@@ -91,9 +91,7 @@ export default {
   transform: translateX(10px);
   opacity: 0;
 }
-html,body{
-  background: #eaeaea;
-}
+
 .leaguelist{
   background: #fff;
   margin:10px;

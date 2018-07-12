@@ -260,7 +260,7 @@
           </div>
           <div class="btn-team">
               <span @click="close" v-if="show">取消</span>
-              <span>确定</span>
+              <span @click="ensure">确定</span>
           </div>
       </div>
     </div>
@@ -283,10 +283,8 @@ export default {
   },
   created() {
     this.selq = JSON.parse(JSON.stringify(this.sel.stroed))
-    // console.log(this.selq)
     //do something after creating vue instance
     this.$nextTick(() => {
-      // console.log(this)
       this.conteamscroll = new BScroll(this.$refs.conteam, {
         // click: true
       })
@@ -299,16 +297,24 @@ export default {
     },
     pitchzk(e){
       e.currentTarget.classList.toggle("xz-zk-red")
-      console.log(e.currentTarget)
-      console.log(e.currentTarget.cellIndex)
+      //获取点击的td在二维数组中的位置
+      let tdy = e.currentTarget.cellIndex;
       let seltr = e.currentTarget.parentNode
-      console.log(seltr)
       var tr = document.getElementsByTagName("tr");
-      for(let i = 0;i<tr.length;i++){
-        if(tr[i]===seltr){
-        console.log(i)
+      for(let tdx = 0;tdx<tr.length;tdx++){
+        if(tr[tdx]===seltr){
+          if(this.selq[tdx][tdy]==1){
+            this.selq[tdx][tdy]=0;
+          }else{
+            this.selq[tdx][tdy]=1;
+          }
         }
       }
+    },
+    ensure(){
+      this.show = !this.show
+      this.$emit('close')
+      this.sel.stroed = this.selq
     }
   }
 }

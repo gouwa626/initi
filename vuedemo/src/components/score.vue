@@ -7,13 +7,13 @@
       >
       <thead>
         <th>{{index}}组</th>
-        <th>球队</th>
-        <th>场</th>
-        <th>胜</th>
-        <th>平</th>
-        <th>负</th>
-        <th>进/失</th>
-        <th>积分</th>
+        <th>{{thname.team}}</th>
+        <th>{{thname.site}}</th>
+        <th>{{thname.win}}</th>
+        <th>{{thname.flat}}</th>
+        <th>{{thname.negative}}</th>
+        <th>{{thname.enterlose}}</th>
+        <th>{{thname.intergral}}</th>
       </thead>
       <tbody>
         <tr v-for="match in group" :key="match.key">
@@ -26,19 +26,22 @@
           <td>{{match.goals_for}}/{{match.goals_against}}</td>
           <td>{{match.points}}</td>
         </tr>
+        <tr v-if="scorelist.all==''">
+          <td colspan="8">暂无数据</td>
+        </tr>
       </tbody>
     </table>
 
     <table class="scorecontent" v-if="scorelist.all instanceof Array">
       <thead>
-        <th>A组</th>
-        <th>球队</th>
-        <th>场</th>
-        <th>胜</th>
-        <th>平</th>
-        <th>负</th>
-        <th>进/失</th>
-        <th>积分</th>
+        <th>{{thname.group}}</th>
+        <th>{{thname.team}}</th>
+        <th>{{thname.site}}</th>
+        <th>{{thname.win}}</th>
+        <th>{{thname.flat}}</th>
+        <th>{{thname.negative}}</th>
+        <th>{{thname.enterlose}}</th>
+        <th>{{thname.intergral}}</th>
       </thead>
       <tbody>
         <tr v-for="mat in scorelist.all"
@@ -51,6 +54,9 @@
           <td>{{mat.played_lost}}</td>
           <td>{{mat.goals_for}}/{{mat.goals_against}}</td>
           <td>{{mat.points}}</td>
+        </tr>
+        <tr v-if="scorelist.all==''">
+          <td colspan="8">暂无数据</td>
         </tr>
       </tbody>
     </table>
@@ -76,7 +82,17 @@ export default {
   },
   data(){
     return{
-      scorelist:[]
+      scorelist:[],
+      thname:{
+        group:'A组',
+        team:'球队',
+        site:'场',
+        win:'胜',
+        flat:'平',
+        negative:'负',
+        enterlose:'进/失',
+        intergral:'积分',
+      }
     }
   },
   mounted() {
@@ -98,12 +114,12 @@ export default {
   height: 86vh;
   overflow: scroll;
 }
+.scoreitems{
+  padding-bottom: 28%;
+}
 .scorecont,.scorecontent{
   width: 100%;
   color: #fff;
-}
-.scorecontent{
-  margin-bottom: 50px;
 }
 .scorecont tbody,.scorecontent tbody{
   background-color: #28292e;

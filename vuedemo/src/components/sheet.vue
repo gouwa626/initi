@@ -17,45 +17,47 @@
         >下一轮</span>
       </li>
     </ul>
-    <table class="sheet" v-if="sheetlist.match_list instanceof Array">
-      <tbody>
-        <tr v-for="match in sheetlist.match_list"
-          :key="match.key"
-          v-if="!sheetlist.match_list==''">
-          <td width="25%">{{match.match_time|timestampToTime}}</td>
-          <td width="25%">{{match.home_name}}</td>
-          <td width="25%" v-if="match.score==''">VS</td>
-          <td width="25%" v-else>{{match.score}}</td>
-          <td width="25%">{{match.guest_name}}</td>
-        </tr>
-        <tr v-if="sheetlist.match_list==''" class="listnull">
-          <td colspan="4">暂无数据</td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="sheet" v-else-if="sheetlist.match_list instanceof Object&&!sheetlist.match_list==''"
-      v-for="(matchs,index) in sheetlist.match_list"
-      :key="matchs.key"
-      >
-      <thead >
-        <th>{{index}}组时间</th>
-        <th>主队</th>
-        <th>比分</th>
-        <th>客队</th>
-      </thead>
-      <tbody>
-        <tr v-for="match in matchs" :key="match.key">
-          <td width="25%">{{match.match_time|timestampToTime}}</td>
-          <td width="25%">{{match.home_name}}</td>
-          <td width="25%" v-if="match.score==''">VS</td>
-          <td width="25%" v-else>{{match.score}}</td>
-          <td width="25%">{{match.guest_name}}</td>
-        </tr>
-        <tr v-if="sheetlist.match_list==''" class="listnull">
-          <td colspan="4">暂无数据</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="subsheet">
+      <table class="sheet" v-if="sheetlist.match_list instanceof Array">
+        <tbody>
+          <tr v-for="match in sheetlist.match_list"
+            :key="match.key"
+            v-if="!sheetlist.match_list==''">
+            <td width="25%">{{match.match_time|timestampToTime}}</td>
+            <td width="25%">{{match.home_name}}</td>
+            <td width="25%" v-if="match.score==''">VS</td>
+            <td width="25%" v-else>{{match.score}}</td>
+            <td width="25%">{{match.guest_name}}</td>
+          </tr>
+          <tr v-if="sheetlist.match_list==''" class="listnull">
+            <td colspan="4">暂无数据</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="sheet" v-else-if="sheetlist.match_list instanceof Object&&!sheetlist.match_list==''"
+        v-for="(matchs,index) in sheetlist.match_list"
+        :key="matchs.key"
+        >
+        <thead >
+          <th>{{index}}组 时间</th>
+          <th>主队</th>
+          <th>比分</th>
+          <th>客队</th>
+        </thead>
+        <tbody>
+          <tr v-for="match in matchs" :key="match.key">
+            <td width="25%">{{match.match_time|timestampToTime}}</td>
+            <td width="25%">{{match.home_name}}</td>
+            <td width="25%" v-if="match.score==''">VS</td>
+            <td width="25%" v-else>{{match.score}}</td>
+            <td width="25%">{{match.guest_name}}</td>
+          </tr>
+          <tr v-if="sheetlist.match_list==''" class="listnull">
+            <td colspan="4">暂无数据</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -85,13 +87,16 @@ export default {
  },
   methods: {
     getround(section_id,trunid){
-      this.axios.get("https://lu.cp988.cn/api/matchlist?league_id=" + this.elem.league_id +
-      "&season_id=" + this.selval + "&section_id=" + section_id+ "&turn_id=" + trunid
-      ).then(res => {
-        this.sheetlist = res.data
-      }, res => {
-        console.log("Error")
-      })
+      if (section_id||trunid) {
+        this.axios.get("https://lu.cp988.cn/api/matchlist?league_id=" + this.elem.league_id +
+        "&season_id=" + this.selval + "&section_id=" + section_id+ "&turn_id=" + trunid
+        ).then(res => {
+          this.sheetlist = res.data
+        }, res => {
+          console.log("Error")
+        })
+      }
+
     },
 
   },
@@ -117,6 +122,10 @@ export default {
   margin: 6px 9px;
   height: 86vh;
   overflow: scroll;
+
+}
+.subsheet{
+  padding-bottom: 18%;
 }
 .sheet{
   width: 100%;
