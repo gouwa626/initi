@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import part from './part.vue'
+import part from './part/part.vue'
 import qs from 'qs'
 export default {
   components: {

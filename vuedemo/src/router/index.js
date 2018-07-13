@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import index from '@/components/index.vue'
-import content from '@/components/content.vue'
-import ssq from '@/components/ssq.vue'
-import sszx from '@/components/sszx.vue'
+import content from '@/components/content/content.vue'
+import ssq from '@/components/ssq/ssq.vue'
+import sszx from '@/components/sszx/sszx.vue'
 
 Vue.use(Router)
 
@@ -18,10 +17,6 @@ export default new Router({
       path: '/content',
       name: 'content',
       component: content
-    }, {
-      path: '/index',
-      name: 'index',
-      component: index
     }, {
       path: '/ssq',
       name: 'ssq',

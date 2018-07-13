@@ -61,7 +61,7 @@
 <script>
 import BScroll from 'better-scroll'
 import qs from 'qs'
-import zhangkai from '@/components/zhangkai'
+import zhangkai from './zhangkai'
 export default {
   components: {
     zhangkai

@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <router-link :to="{ name: 'content', params: {} }">content</router-link>
-    <router-link :to="{ name: 'ssq', params: {} }">ssq</router-link>
+    <router-link :to="{ name: 'content', params: {} }">竞彩足球</router-link>
+    <router-link :to="{ name: 'ssq', params: {} }">双色球</router-link>
     <router-link :to="{ name: 'sszx', params: {} }">赛事中心</router-link>
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      
+
     }
   }
 }
