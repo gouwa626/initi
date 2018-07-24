@@ -19,6 +19,12 @@
       </div>
       <p>大乐透</p>
     </div>
+    <div class="dlt" @click="jumptodlt">
+      <div class="dltimg">
+        <img src="@/assets/dlt-logo.png" alt="">
+      </div>
+      <p>大乐透</p>
+    </div>
   </div>
   <div class="baritems">
     <div class="sszx" @click="jumptosszx">
@@ -56,23 +62,22 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="css" scoped>
-.navitems{
-  margin: 10px 10px 0;
-  padding: 18px 0;
-  background: #fff;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-}
-.jczq,.ssq,.dlt{
-  flex: 1;
-}
-.jczqimg img,.ssqimg img,.dltimg img{
-  width: 60px;
-}
-
-a {
-  color: #42b983;
-}
+<style lang="stylus" scoped>
+.navitems
+  margin 10px 10px 0
+  padding 18px 0
+  background #fff
+  border-radius 4px
+  display flex
+  justify-content start
+  flex-wrap wrap
+  font-family Arial, "Microsoft Yahei", "Helvetica Neue", Helvetica, sans-serif
+.jczq,.ssq,.dlt
+  width 33%
+  margin-bottom 10px
+.jczq,.ssq,.dlt,:first-child
+  font-size 14px
+.jczqimg,.ssqimg,.dltimg
+   img
+    width 60px
 </style>

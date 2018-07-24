@@ -79,43 +79,33 @@ export default {
 }
 </script>
 
-<style lang="css" >
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
+<style lang="stylus" >
+.slide-fade-enter-active
+  transition all .3s ease
+.slide-fade-leave-active
+  transition all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0)
 .slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active for below version 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
-}
+  transform translateX(10px)
+  opacity 0
+.leaguelist
+  background #fff
+  margin 10px
+  display flex
+  flex-wrap wrap
+.open
+  position fixed
+.league
+  width 33.33%
+  font-size 12px
+  padding 0 0 6px 0
+  box-sizing border-box
+  p
+    color #8a8a8a
+.leagimg
+  width 50px
+  height 60px
+  margin 15px auto
+  img
+    width 100%
 
-.leaguelist{
-  background: #fff;
-  margin:10px;
-  display: flex;
-  flex-wrap:wrap;
-}
-.open{
-  position: fixed;
-}
-.league{
-  width: 33.33%;
-  font-size: 12px;
-  padding: 0 0 6px 0;
-  box-sizing: border-box;
-}
-.leagimg{
-  width: 50px;
-  height: 60px;
-  margin: 15px auto;
-}
-.leagimg img{
-  width: 100%;
-}
-.league p{
-  color: #8a8a8a;
-}
 </style>

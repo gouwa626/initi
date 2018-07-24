@@ -17,9 +17,9 @@
           </div>
           <div class="item-right">
             <div class="r-title">
-              <span>{{addr.homeTeam}}</span>
+              <span>[{{addr.awayRank}}]{{addr.homeTeam}}</span>
               <span>VS</span>
-              <span>{{addr.awayTeam}}</span>
+              <span>{{addr.awayTeam}}[{{addr.awayRank}}]</span>
             </div>
             <div class="r-cont">
                 <div class="con-top">
@@ -189,8 +189,8 @@ export default {
       var Y = date.getFullYear() + '-';
       var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
       var D = date.getDate() + ' ';
-      var h = date.getHours() + ':';
-      var m = date.getMinutes();
+      var h = (date.getHours()<10?'0' +date.getHours():date.getHours() )+ ':';
+      var m = date.getMinutes()<10?'0' +date.getMinutes():date.getMinutes();
       var s = ':' + date.getSeconds();
       return h + m;
     }
