@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   name: 'HelloWorld',
   data() {
@@ -57,6 +58,16 @@ export default {
     jumptosszx() {
        this.$router.push('/sszx');
     },
+  },
+  created() {
+    //do something after creating vue instance
+    this.axios.post("http://192.168.2.135:11002/v1/user/shop/info",
+    qs.stringify({shopId:'2018041811513088922000001'}))
+    .then(res => {
+      console.log(res);
+    }, res => {
+      console.log("Error")
+    })
   }
 }
 </script>
